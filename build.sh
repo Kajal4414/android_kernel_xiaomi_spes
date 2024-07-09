@@ -19,10 +19,11 @@ rm -rf out build.log KernelSU AnyKernel3 *.zip
 # Integrate KernelSU
 echo -e -n "\e[33mDo you want to integrate KernelSU? (y/N):\e[0m " && read integrate_kernelsu
 if [ "$integrate_kernelsu" = "y" ]; then
-	if [ ! -e "drivers/kernelsu" ]; then
-		git fetch https://github.com/Kajal4414/kernel_xiaomi_sm6225.git uvite-dev
-		git cherry-pick a172dcd
-	fi
+	# It is possible that the cherry-pick command is causing a conflict with the KernelSU setup.sh script.
+	# if [ ! -e "drivers/kernelsu" ]; then
+	# 	git fetch https://github.com/Kajal4414/kernel_xiaomi_sm6225.git uvite-dev
+	# 	git cherry-pick a172dcd
+	# fi
 	curl -LSs "https://raw.githubusercontent.com/Kajal4414/KernelSU/main/kernel/setup.sh" | bash -
 	ZIP_SUFFIX="SU"
 else
