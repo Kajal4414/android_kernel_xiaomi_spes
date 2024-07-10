@@ -21,9 +21,7 @@ export PATH="$(pwd)/clang-r450784e/bin:$PATH"
 rm -rf KernelSU AnyKernel3 Uvite*.zip build.log out
 
 # Integrate KernelSU
-read -t 8 -p $'\033[1;33m\nDo you want to integrate KernelSU? (y/N):\033[0m ' integrate_kernelsu || integrate_kernelsu="N"
-if [ "$integrate_kernelsu" = "y" ]; then
-	[ ! -e "drivers/kernelsu" ] && git fetch -q https://github.com/Kajal4414/kernel_xiaomi_sm6225.git uvite-dev && git cherry-pick a172dcd >/dev/null 2>&1 && echo -e "${GREEN}KernelSU integration patch applied! Rerun the script!${NC}" && exit 1
+if [ -e "drivers/kernelsu" ] || grep -q 'CONFIG_LOCALVERSION="-Uvite-KernelSU"' arch/arm64/configs/vendor/spes-perf_defconfig; then
 	curl -LSs "https://raw.githubusercontent.com/Kajal4414/KernelSU/main/kernel/setup.sh" | bash -
 	echo -e "${GREEN}\nBuilding with KernelSU.${NC}"
 	ZIP_SUFFIX="SU"
