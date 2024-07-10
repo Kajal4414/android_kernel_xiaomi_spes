@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - uvite-dev
+    paths:
+      - ".github/workflows/**"
 
 jobs:
   build_kernel:
