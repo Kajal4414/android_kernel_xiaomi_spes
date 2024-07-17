@@ -32,13 +32,13 @@ jobs:
           export KBUILD_BUILD_USER=nobody
           export KBUILD_BUILD_HOST=android-build
           export PATH="$(pwd)/clang-r450784e/bin:$PATH"
-          make O=out ARCH=arm64 vendor/spes-perf_defconfig LLVM=1 LLVM_IAS=1 Image.gz dtbo.img -j$(nproc --all) 2> >(tee log.txt >&2) || exit $?
+          make O=out ARCH=arm64 vendor/spes-perf_defconfig LLVM=1 LLVM_IAS=1 Image.gz dtb.img dtbo.img -j$(nproc --all) 2> >(tee log.txt >&2) || exit $?
 
       - name: Package Kernel
         run: |
           ZIPNAME="Uvite_KernelSU_$(date '+%d-%m-%Y')_$(git rev-parse --short=7 HEAD).zip"
           git clone -q https://github.com/Kajal4414/AnyKernel3.git AnyKernel3
-          cp "out/arch/arm64/boot/Image.gz" "out/arch/arm64/boot/dtbo.img" AnyKernel3
+          cp out/arch/arm64/boot/{Image.gz,dtb.img,dtbo.img} AnyKernel3
           (cd AnyKernel3 && zip -r9 "../$ZIPNAME" * -x .git README.md *placeholder)
           if [ -f "$ZIPNAME" ]; then echo -e "\e[32mZIP: $ZIPNAME\e[0m"; else exit 1; fi
           echo "KERNEL_VERSION=$(make kernelversion)" >> $GITHUB_ENV
