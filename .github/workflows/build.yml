@@ -14,15 +14,20 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-        with:
-          repository: "CHRISL7/kernel_xiaomi_sm6225"
-          ref: "uvite-ksu"
+        # with:
+        #   repository: "CHRISL7/kernel_xiaomi_sm6225"
+        #   ref: "uvite-ksu"
 
       - name: Install Dependencies
         run: sudo apt-get install -y elfutils libarchive-tools && sudo apt-get remove -y libyaml-0-2
 
       - name: Setup AOSP Clang
         run: git clone --depth 1 https://gitlab.com/ThankYouMario/android_prebuilts_clang-standalone.git clang-r450784e
+
+      - name: Patch
+        run: |
+          git config user.name Kajal4414 && git config user.email 81718060+Kajal4414@users.noreply.github.com
+          git cherry-pick a172dcd
 
       - name: Setup KernelSU
         run: rm -rf KernelSU && curl -LSs "https://raw.githubusercontent.com/Kajal4414/KernelSU/main/kernel/setup.sh" | bash -
