@@ -24,11 +24,6 @@ jobs:
       - name: Setup AOSP Clang
         run: git clone --depth 1 https://gitlab.com/ThankYouMario/android_prebuilts_clang-standalone.git clang-r450784e
 
-      - name: Patch
-        run: |
-          git config user.name Kajal4414 && git config user.email 81718060+Kajal4414@users.noreply.github.com
-          git cherry-pick a172dcd
-
       - name: Setup KernelSU
         run: rm -rf KernelSU && curl -LSs "https://raw.githubusercontent.com/Kajal4414/KernelSU/main/kernel/setup.sh" | bash -
 
