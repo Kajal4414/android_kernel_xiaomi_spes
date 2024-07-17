@@ -3,7 +3,7 @@ name: Build Kernel
 on:
   push:
     branches:
-      - uvite-dev
+      - "uvite-dev"
     paths:
       - ".github/workflows/**"
 
@@ -14,9 +14,9 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-        # with:
-        #   repository: "CHRISL7/kernel_xiaomi_sm6225"
-        #   ref: "uvite-ksu"
+        with:
+          # repository: "CHRISL7/kernel_xiaomi_sm6225"
+          ref: "uvite"
 
       - name: Install Dependencies
         run: sudo apt-get install -y elfutils libarchive-tools && sudo apt-get remove -y libyaml-0-2
