@@ -15,7 +15,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          # repository: "CHRISL7/kernel_xiaomi_sm6225"
           ref: "uvite"
 
       - name: Install Dependencies
@@ -25,7 +24,7 @@ jobs:
         run: git clone --depth 1 https://gitlab.com/ThankYouMario/android_prebuilts_clang-standalone.git clang-r450784e
 
       - name: Setup KernelSU
-        run: rm -rf KernelSU && curl -LSs "https://raw.githubusercontent.com/Kajal4414/KernelSU/main/kernel/setup.sh" | bash -
+        run: rm -rf KernelSU && curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s v0.9.5
 
       - name: Compile Kernel
         run: |
@@ -36,7 +35,7 @@ jobs:
 
       - name: Package Kernel
         run: |
-          ZIPNAME="Uvite_KernelSU_$(date '+%d-%m-%Y')_$(git rev-parse --short=7 HEAD).zip"
+          ZIPNAME="Uvite_KernelSU_v0.9.5_$(date '+%d-%m-%Y')_$(git rev-parse --short=7 HEAD).zip"
           git clone -q https://github.com/Kajal4414/AnyKernel3.git AnyKernel3
           cp out/arch/arm64/boot/{Image.gz,dtb.img,dtbo.img} AnyKernel3
           (cd AnyKernel3 && zip -r9 "../$ZIPNAME" * -x .git README.md *placeholder)
