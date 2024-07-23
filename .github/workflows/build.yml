@@ -19,7 +19,7 @@ jobs:
           ref: "uvite"
 
       - name: Install Dependencies
-        run: sudo apt-get install -y elfutils libarchive-tools && sudo apt-get remove -y libyaml-0-2
+        run: sudo apt-get install -y elfutils libarchive-tools && sudo apt-get remove -y libyaml-dev
 
       - name: Setup AOSP Clang
         run: git clone --depth 1 https://gitlab.com/kei-space/clang/r522817.git toolchain
