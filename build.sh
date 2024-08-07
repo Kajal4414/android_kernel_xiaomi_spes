@@ -7,7 +7,7 @@ RED='\033[1;31m'
 NC='\033[0m' # No Color
 
 # Install Dependencies
-# sudo apt update && sudo apt install -y elfutils libarchive-tools flex bc cpio && sudo apt remove -y libyaml-0-2
+# sudo apt install -y elfutils libarchive-tools flex bc cpio && sudo apt remove -y libyaml-dev
 
 # Clone Clang
 [ ! -d "clang-r450784e" ] && git clone --depth 1 https://gitlab.com/ThankYouMario/android_prebuilts_clang-standalone.git clang-r450784e
@@ -31,7 +31,7 @@ else
 fi
 
 # Build Kernel
-make O=out ARCH=arm64 vendor/spes-perf_defconfig LLVM=1 LLVM_IAS=1 Image.gz dtbo.img -j$(nproc --all) 2> >(tee build.log >&2) || exit $?
+make O=out ARCH=arm64 vendor/spes-perf_defconfig LLVM=1 LLVM_IAS=1 Image.gz dtb.img dtbo.img -j$(nproc --all) 2> >(tee build.log >&2) || exit $?
 
 # Package Kernel
 if [ -f "out/arch/arm64/boot/Image.gz" ]; then
