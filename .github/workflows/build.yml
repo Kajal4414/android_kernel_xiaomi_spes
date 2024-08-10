@@ -50,7 +50,7 @@ jobs:
           files: BloodMoon_KernelSU_*.zip
           tag_name: v${{ env.KERNEL_VERSION}}
 
-      # - name: Upload Artifact
+      # - name: Upload Artifact #
       #   uses: actions/upload-artifact@v4
       #   with:
       #     name: Uvite_KernelSU_${{ github.run_id }}
