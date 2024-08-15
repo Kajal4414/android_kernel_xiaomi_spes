@@ -24,14 +24,14 @@ jobs:
       - name: Setup AOSP Clang
         run: git clone --depth 1 https://gitlab.com/kei-space/clang/r522817.git toolchain
 
-      - name: Configure Git
-        run: |
-          git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
-          git config user.name "${{ github.actor }}"
-          git branch
-          git pull
-          git log --oneline -10
-          git revert cd45b47 --no-edit
+      # - name: Configure Git
+      #   run: |
+      #     git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
+      #     git config user.name "${{ github.actor }}"
+      #     git branch
+      #     git pull
+      #     git log --oneline -10
+      #     git revert cd45b47 --no-edit
 
       - name: Setup KernelSU
         run: rm -rf KernelSU && curl -LSs "https://raw.githubusercontent.com/Kajal4414/KernelSU/main/kernel/setup.sh" | bash -
@@ -52,15 +52,15 @@ jobs:
           if [ -f "$ZIPNAME" ]; then echo -e "\e[32mZIP: $ZIPNAME\e[0m"; else exit 1; fi
           echo "KERNEL_VERSION=$(make kernelversion)" >> $GITHUB_ENV
 
-      - name: GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          name: BloodMoon KernelSU
-          files: BloodMoon_KernelSU_*.zip
-          tag_name: v${{ env.KERNEL_VERSION}}
-
-      # - name: Upload Artifact #
-      #   uses: actions/upload-artifact@v4
+      # - name: GitHub Release
+      #   uses: softprops/action-gh-release@v2
       #   with:
-      #     name: BloodMoon_KernelSU_${{ github.run_id }}
-      #     path: BloodMoon_KernelSU_*.zip
+      #     name: BloodMoon KernelSU
+      #     files: BloodMoon_KernelSU_*.zip
+      #     tag_name: v${{ env.KERNEL_VERSION}}
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: BloodMoon_KernelSU_${{ github.run_id }}
+          path: BloodMoon_KernelSU_*.zip
