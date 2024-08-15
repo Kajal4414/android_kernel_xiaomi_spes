@@ -18,10 +18,10 @@ export KBUILD_BUILD_HOST=android-build
 export PATH="$(pwd)/clang-r450784e/bin:$PATH"
 
 # Cleanup
-rm -rf KernelSU AnyKernel3 Uvite*.zip build.log out
+rm -rf KernelSU AnyKernel3 BloodMoon*.zip build.log out
 
 # Integrate KernelSU
-if [ -e "drivers/kernelsu" ] || grep -q 'CONFIG_LOCALVERSION="-Uvite-KernelSU"' arch/arm64/configs/vendor/spes-perf_defconfig; then
+if [ -e "drivers/kernelsu" ] || grep -q 'CONFIG_LOCALVERSION="-BloodMoon-KernelSU"' arch/arm64/configs/vendor/spes-perf_defconfig; then
 	curl -LSs "https://raw.githubusercontent.com/Kajal4414/KernelSU/main/kernel/setup.sh" | bash -
 	echo -e "${GREEN}\nBuilding with KernelSU.${NC}"
 	ZIP_SUFFIX="SU"
@@ -35,7 +35,7 @@ make O=out ARCH=arm64 vendor/spes-perf_defconfig LLVM=1 LLVM_IAS=1 Image.gz dtb.
 
 # Package Kernel
 if [ -f "out/arch/arm64/boot/Image.gz" ]; then
-	ZIPNAME="Uvite_Kernel${ZIP_SUFFIX}_$(date '+%d-%m-%Y')_$(git rev-parse --short=7 HEAD).zip"
+	ZIPNAME="BloodMoon_Kernel${ZIP_SUFFIX}_$(date '+%d-%m-%Y')_$(git rev-parse --short=7 HEAD).zip"
 	git clone -q https://github.com/Kajal4414/AnyKernel3.git AnyKernel3
 	cp out/arch/arm64/boot/{Image.gz,dtbo.img} AnyKernel3
 	(cd AnyKernel3 && zip -r9 "../$ZIPNAME" * -x .git README.md *placeholder)
