@@ -25,7 +25,7 @@ jobs:
         run: git branch && git clone --depth 1 https://gitlab.com/kei-space/clang/r522817.git toolchain
 
       - name: Setup KernelSU
-        run: rm -rf KernelSU && curl -LSs "https://raw.githubusercontent.com/Kajal4414/KernelSU/main/kernel/setup.sh" | bash -
+        run: git revert cd45b47 --no-edit && rm -rf KernelSU && curl -LSs "https://raw.githubusercontent.com/Kajal4414/KernelSU/main/kernel/setup.sh" | bash -
 
       - name: Compile Kernel
         run: |
