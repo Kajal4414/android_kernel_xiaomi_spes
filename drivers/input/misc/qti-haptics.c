@@ -56,7 +56,7 @@ enum haptics_custom_effect_param {
 #define HAP_BRAKE_PATTERN_MAX		4
 #define HAP_WAVEFORM_BUFFER_MAX		8
 #define HAP_VMAX_MV_DEFAULT		1800
-#define HAP_VMAX_MV_MAX			3596
+#define HAP_VMAX_MV_MAX			3700
 #define HAP_PLAY_RATE_US_DEFAULT	5715
 #define HAP_PLAY_RATE_US_MAX		20475
 #define HAP_PLAY_RATE_US_LSB		5
@@ -474,6 +474,9 @@ static int qti_haptics_module_en(struct qti_hap_chip *chip, bool en)
 	return rc;
 }
 
+static int vmax_mv_override = 0;
+module_param_named(vmax_mv_override, vmax_mv_override, int, 0664);
+
 static int qti_haptics_config_vmax(struct qti_hap_chip *chip, int vmax_mv)
 {
 	u8 addr, mask, val;
@@ -481,6 +484,11 @@ static int qti_haptics_config_vmax(struct qti_hap_chip *chip, int vmax_mv)
 
 	addr = REG_HAP_VMAX_CFG;
 	mask = HAP_VMAX_MV_MASK;
+	if(vmax_mv_override) {
+		if(vmax_mv_override > HAP_VMAX_MV_MAX)
+			vmax_mv_override = HAP_VMAX_MV_MAX;
+		vmax_mv = vmax_mv_override;
+	}
 	val = (vmax_mv / HAP_VMAX_MV_LSB) << HAP_VMAX_MV_SHIFT;
 	rc = qti_haptics_masked_write(chip, addr, mask, val);
 	if (rc < 0)
