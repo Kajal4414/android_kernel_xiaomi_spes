@@ -15,8 +15,8 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          # repository: "CHRISL7/kernel_xiaomi_sm6225"
-          ref: "uvite"
+          repository: "scas-projects/android_kernel_xiaomi_spes"
+          ref: "ksu"
 
       - name: Install Dependencies
         run: sudo apt-get install -y elfutils libarchive-tools && sudo apt-get remove -y libyaml-dev
